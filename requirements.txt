@@ -1,0 +1,27 @@
+-f https://download.pytorch.org/whl/torch_stable.html
+Flask==0.11.1
+# Jinja2==2.8
+# itsdangerous==0.24
+MarkupSafe==0.23
+Werkzeug==0.11.15
+click==6.6
+gunicorn==19.6.0
+requests
+numpy
+clint
+scipy
+flask_restful
+flask-jsonpify
+rq
+timeout-decorator
+gensim
+Pillow
+pandas
+torch==1.6.0+cpu
+torchvision==0.7.0+cpu
+# torch==1.4
+# torchvision==0.5.0
+# oauth2client
+# tensorflow-cpu
+# scikit-learn==0.22.2.post1
+#opencv-python
