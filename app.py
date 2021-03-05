@@ -7,7 +7,6 @@ from io import StringIO
 import io
 import requests
 
-
 #   example of pictures
 #   good durian https://www.ift.org/-/media/iftnext/newsletter/newsletter-article-images/2020/may/durianfruit1143494919.jpg
 #   bad durian  http://cdn.cnn.com/cnnnext/dam/assets/120222061408-durian-2.jpg
@@ -19,11 +18,11 @@ def predict():
         response = requests.get(p_image_url)
         image_bytes = io.BytesIO(response.content)
 
-        NUM_CLASSES = 3
+        NUM_CLASSES = 4
         model_ft1 = models.resnet34(pretrained = True)
         num_ftrs = model_ft1.fc.in_features
         model_ft1.fc = nn.Linear(num_ftrs, NUM_CLASSES)
-        model_ft1.load_state_dict(torch.load('fine_tuned_best_model.pt', map_location=torch.device('cpu')), strict = False)
+        model_ft1.load_state_dict(torch.load('model.pt', map_location=torch.device('cpu')), strict = False)
         # model_ft1.cuda()
 
         preprocess_predict = transforms.Compose([
@@ -45,14 +44,26 @@ def predict():
         _, preds = torch.max(outputs, dim = 1)
         predictions += preds
         predictions = torch.stack(predictions).cpu()
-        temp = str(predictions)
-        result = {'result':temp}
+        # temp = str(predictions)
+
+        if str(predictions) == 'tensor([0])':  #
+                grade = 'Durian Chani'
+        elif str(predictions) == 'tensor([1])':   #
+                grade = 'Durian Kanyao'
+        elif str(predictions) == 'tensor([2])':   #
+                grade = 'Durian Monthong'
+        elif str(predictions) == 'tensor([3])':   #
+                grade = 'Other Fruit'        
+
+        result = {'result':grade}
 
         return jsonify(result)
 
+@app.route('/test')
+def test():
+        return "OK PASSED"
 
 if __name__ == '__main__':
-    app.run(debug=True, port = 5005)
-
+    app.run(host='0.0.0.0', debug=True, port = 5005)
 
 
