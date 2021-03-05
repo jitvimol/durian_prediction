@@ -1,5 +1,6 @@
-# Durian picture alssification
-durian_prediction CVE1
+# Durian picture classification
+
+durian_prediction project CVE1 group
 
 Image Classification for durian.  Trained with Pytorh + pretrain model resnet34
 
